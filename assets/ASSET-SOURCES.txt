@@ -1,0 +1,7 @@
+Original assets: Casual Avatars by Kitsuge Apps, CC0.
+https://opengameart.org/content/casual-avatars
+CasualAvatar_00.png through CasualAvatar_09.png preserved.
+
+New assets: new-boy-01.png and new-boy-02.png generated using built-in image_gen.
+Style references: CC0 CasualAvatar_02.png and CasualAvatar_07.png.
+Selection balanced: 6 boy-styled avatars and 6 girl-styled avatars; any avatar can be selected.
