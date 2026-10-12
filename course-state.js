@@ -1,7 +1,7 @@
 (function(root){
   'use strict';
-  const CODES={lesson:'디싹 둔원초',review:'디싹 둔원초1',materials:'디싹 둔원초2'};
-  const initial=()=>({version:4,name:'',avatar:'',motto:null,view:'welcome',opened:[false,false],surveys:[false,false],internIssued:false,rookieIssued:false,lessonUnlocked:false,reviewUnlocked:false,materialsUnlocked:false,aiIndex:0,aiComplete:false,observationComplete:false,index:0,correct:[false,false,false,false,false],internDate:'',rookieDate:''});
+  const CODES={lesson:'디싹 둔원초',review:'디싹 둔원초1',materials:'디싹 둔원초2',audio:'둔원초 디싹'};
+  const initial=()=>({version:5,name:'',avatar:'',motto:null,view:'welcome',opened:[false,false],surveys:[false,false],internIssued:false,rookieIssued:false,lessonUnlocked:false,reviewUnlocked:false,materialsUnlocked:false,audioUnlocked:false,aiIndex:0,aiComplete:false,observationComplete:false,index:0,correct:[false,false,false,false,false],internDate:'',rookieDate:''});
   const ready=s=>!!s.avatar&&[0,1,2].includes(s.motto);
   const intern=s=>s.name.trim()!==''&&s.surveys.every(Boolean)&&s.internIssued;
   const observed=s=>intern(s)&&s.lessonUnlocked&&s.aiComplete&&s.observationComplete;
@@ -21,6 +21,8 @@
       case 'graduate-badge':return reviewed(s)&&s.rookieIssued&&ready(s);
       case 'materials-gate':return reviewed(s)&&s.rookieIssued&&ready(s);
       case 'materials':return reviewed(s)&&s.rookieIssued&&ready(s)&&s.materialsUnlocked;
+      case 'audio-gate':return canEnter(s,'materials');
+      case 'audio-materials':return canEnter(s,'materials')&&s.audioUnlocked;
       default:return false;
     }
   }
@@ -32,7 +34,7 @@
       case 'open-survey':{const i=event.index;if(![0,1].includes(i)||!canEnter(s,i===0?'survey1':'survey2')||s.surveys[i])return old;s.opened[i]=true;break;}
       case 'confirm-survey':{const i=event.index;if(![0,1].includes(i)||!s.opened[i]||s.surveys[i]||!canEnter(s,i===0?'survey1':'survey2'))return old;s.surveys[i]=true;if(i===0)s.view='survey2';else{s.internIssued=true;s.view='intern-editor'}break;}
       case 'goto':if(!canEnter(s,event.view))return old;s.view=event.view;break;
-      case 'unlock':{const code=String(event.code||'').trim().replace(/\s+/g,' ');if(!Object.hasOwn(CODES,event.stage)||code!==CODES[event.stage]||!ready(s))return old;if(event.stage==='lesson'&&intern(s)){s.lessonUnlocked=true;s.view='ai'}else if(event.stage==='review'&&observed(s)){s.reviewUnlocked=true;s.view='review'}else if(event.stage==='materials'&&canEnter(s,'materials-gate')){s.materialsUnlocked=true;s.view='materials'}else return old;break;}
+      case 'unlock':{const code=String(event.code||'').trim().replace(/\s+/g,' ');if(!Object.hasOwn(CODES,event.stage)||code!==CODES[event.stage]||!ready(s))return old;if(event.stage==='lesson'&&intern(s)){s.lessonUnlocked=true;s.view='ai'}else if(event.stage==='review'&&observed(s)){s.reviewUnlocked=true;s.view='review'}else if(event.stage==='materials'&&canEnter(s,'materials-gate')){s.materialsUnlocked=true;s.view='materials'}else if(event.stage==='audio'&&canEnter(s,'audio-gate')){s.audioUnlocked=true;s.view='audio-materials'}else return old;break;}
       case 'ai-prev':if(!canEnter(s,'ai'))return old;s.aiIndex=Math.max(0,s.aiIndex-1);break;
       case 'ai-next':if(!canEnter(s,'ai'))return old;if(s.aiIndex<3)s.aiIndex++;else{s.aiComplete=true;s.view='observation'}break;
       case 'observation-complete':if(s.view!=='observation'||!canEnter(s,'observation'))return old;s.observationComplete=true;s.view='after-observation';break;
@@ -45,14 +47,15 @@
   }
   function restore(raw,avatarIds){
     const s=initial();
-    if(!raw||![2,3,4].includes(raw.version))return s;
+    if(!raw||![2,3,4,5].includes(raw.version))return s;
     s.name=typeof raw.name==='string'?raw.name.trim().slice(0,12):'';
     if(avatarIds.includes(raw.avatar)&&(raw.version>=3||raw.avatar!=='CasualAvatar_02'))s.avatar=raw.avatar;
     if(raw.version>=3&&[0,1,2].includes(raw.motto))s.motto=raw.motto;
     for(const key of ['opened','surveys','correct'])if(Array.isArray(raw[key])&&raw[key].length===s[key].length)s[key]=raw[key].map(x=>x===true);
     for(const key of ['internIssued','rookieIssued','lessonUnlocked','reviewUnlocked','aiComplete','observationComplete'])s[key]=raw[key]===true;
     if(raw.version<4&&!s.rookieIssued)s.reviewUnlocked=false;
-    s.materialsUnlocked=raw.version===4&&raw.materialsUnlocked===true;
+    s.materialsUnlocked=raw.version>=4&&raw.materialsUnlocked===true;
+    s.audioUnlocked=raw.version>=5&&raw.audioUnlocked===true;
     s.aiIndex=Number.isInteger(raw.aiIndex)?Math.max(0,Math.min(3,raw.aiIndex)):0;
     s.index=Number.isInteger(raw.index)?Math.max(0,Math.min(4,raw.index)):0;
     for(const key of ['internDate','rookieDate'])if(typeof raw[key]==='string')s[key]=raw[key].slice(0,60);

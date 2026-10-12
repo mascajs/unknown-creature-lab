@@ -11,6 +11,7 @@ const questions=[
 const STORE='unknown-creature-lab.lesson1.v2';
 const surveyLinks=['https://form.kosac.re.kr/v/VIHLdoOwDIszWe2C3UYh','https://form.kosac.re.kr/v/PmpAAAEjYWlNdvYG8roo'];
 const surveyNames=['핵심역량 진단 사전 설문','교육 효과성 사전 설문'];
+const audioFiles=[{label:'고라니',file:'water-deer.mp3'},{label:'고양이',file:'cat.mp3'},{label:'너구리',file:'raccoon.mp3'},{label:'부엉이',file:'owl.mp3'}];
 const ranks={intern:{name:'인턴연구원',status:'인턴 등록 완료',color:'#8a663a',date:'internDate'},rookie:{name:'신입연구원',status:'신입 승급 완료',color:'#214f40',date:'rookieDate'}};
 const mottos=[
  ['AI를 잘 활용하되,','결정은 반드시 내가 한다!'],
@@ -74,11 +75,11 @@ function editor(rank){
   document.querySelector('#save-badge').onclick=()=>{const name=document.querySelector('#edit-name').value.trim();if(!name){document.querySelector('#issue-error').textContent='연구원 이름을 입력해 주세요.';return;}if(!CourseFlow.ready(state))return;send({type:'edit',name},false);go(rank==='intern'?'intern-badge':'graduate-badge');};
 }
 function codeGate(stage){
-  const config={lesson:{label:'AI 기초훈련',body:'인턴연구원 등록을 마쳤어요. 선생님이 알려 주시는 코드를 입력하면 AI 기초훈련이 열려요.',action:'AI 기초훈련 시작하기'},review:{label:'오늘의 복습',body:'오늘 수업을 마쳤다면 복습을 시작해요. 선생님이 알려 주시는 새로운 코드를 입력해 주세요.',action:'복습 시작하기'},materials:{label:'2차시 · 사건파일 #1',body:'신입연구원으로 첫 사건을 조사할 준비를 해요. 선생님이 알려 주시는 자료실 코드를 입력해 주세요.',action:'오늘의 자료실 열기'}}[stage];
-  const materials=stage==='materials';
-  app.innerHTML=`<section class="code-gate enter"><p class="eyebrow">${config.label}</p><h1 tabindex="-1">선생님의 안내를 듣고<br>코드를 입력해 주세요.</h1><p>${config.body}</p><form id="code-form"><label for="course-code">수업 코드</label><input id="course-code" autocomplete="off" placeholder="선생님이 알려 주시는 코드" required><p id="code-error" class="error" role="alert"></p><button class="primary" type="submit">${config.action} →</button></form><button id="back-badge" class="text-button">내 ${materials?'신입':'인턴'}연구원증으로 돌아가기</button></section>`;
+  const config={lesson:{label:'AI 기초훈련',body:'인턴연구원 등록을 마쳤어요. 선생님이 알려 주시는 코드를 입력하면 AI 기초훈련이 열려요.',action:'AI 기초훈련 시작하기'},review:{label:'오늘의 복습',body:'오늘 수업을 마쳤다면 복습을 시작해요. 선생님이 알려 주시는 새로운 코드를 입력해 주세요.',action:'복습 시작하기'},materials:{label:'2차시 · 사건파일 #1',body:'신입연구원으로 첫 사건을 조사할 준비를 해요. 선생님이 알려 주시는 자료실 코드를 입력해 주세요.',action:'오늘의 자료실 열기'},audio:{label:'CASE FILE #2 · 3차시 자료실',body:'이번에는 소리로 정체를 조사해요. 선생님이 알려 주시는 새 코드를 입력하면 울음소리 자료를 받을 수 있어요.',action:'3차시 자료실 열기'}}[stage];
+  const materials=stage==='materials',audio=stage==='audio';
+  app.innerHTML=`<section class="code-gate ${audio?'audio-room ':''}enter"><p class="eyebrow">${config.label}</p><h1 tabindex="-1">선생님의 안내를 듣고<br>코드를 입력해 주세요.</h1><p>${config.body}</p><form id="code-form"><label for="course-code">수업 코드</label><input id="course-code" autocomplete="off" placeholder="선생님이 알려 주시는 코드" required><p id="code-error" class="error" role="alert"></p><button class="primary" type="submit">${config.action} →</button></form><button id="back-badge" class="text-button">${audio?'2차시 자료실로 돌아가기':`내 ${materials?'신입':'인턴'}연구원증으로 돌아가기`}</button></section>`;
   document.querySelector('#code-form').onsubmit=e=>{e.preventDefault();const opened=send({type:'unlock',stage,code:document.querySelector('#course-code').value},false);if(opened)render();else document.querySelector('#code-error').textContent='코드가 맞지 않아요. 선생님이 알려 주신 글자와 띄어쓰기를 확인해 주세요.';};
-  document.querySelector('#back-badge').onclick=()=>go(materials?'graduate-badge':'intern-badge');
+  document.querySelector('#back-badge').onclick=()=>go(audio?'materials':materials?'graduate-badge':'intern-badge');
 }
 function materialsRoom(){
   const files=[
@@ -87,8 +88,13 @@ function materialsRoom(){
     {file:'gorilla-cards.zip',download:'고릴라카드_20장.zip',label:'고릴라 카드',tag:'학습 자료 · 20장 · ZIP',body:'고릴라의 다양한 모습을 담은 카드 20장이 들어 있어요.'},
     {file:'human-cards.zip',download:'사람카드_20장.zip',label:'사람 카드',tag:'학습 자료 · 20장 · ZIP',body:'사람의 다양한 모습을 담은 카드 20장이 들어 있어요.'}
   ];
-  app.innerHTML=`<section class="materials-room enter"><p class="eyebrow">CASE FILE #1 · 2차시 자료실</p><h1 tabindex="-1">설산의 거인,<br><span class="accent">정체를 밝혀 주세요.</span></h1><p>웹캠을 사용할 수 없다면 아래 카드로 AI를 학습시켜 보세요.<br>곰·고릴라·사람 카드의 압축을 풀고, 각 종류의 사진을 알맞은 클래스에 올려 주세요.</p><div class="material-files">${files.map(f=>`<article class="material-file"><p class="material-tag">${f.tag}</p><h2>${f.label}</h2><p>${f.body}</p><a class="primary material-download" href="materials/${f.file}" download="${f.download}">${f.label} 내려받기 ↓</a></article>`).join('')}</div><p class="note material-help">내려받은 파일은 다운로드 폴더에서 찾을 수 있어요. ZIP 파일은 먼저 압축을 풀어 주세요.<br>사건파일은 학습용 카드에 섞지 않고, 학습을 마친 뒤 판별할 때 사용해요.</p><button id="back-graduate" class="secondary">내 신입연구원증 보기</button></section>`;
+  app.innerHTML=`<section class="materials-room enter"><p class="eyebrow">CASE FILE #1 · 2차시 자료실</p><h1 tabindex="-1">설산의 거인,<br><span class="accent">정체를 밝혀 주세요.</span></h1><p>웹캠을 사용할 수 없다면 아래 카드로 AI를 학습시켜 보세요.<br>곰·고릴라·사람 카드의 압축을 풀고, 각 종류의 사진을 알맞은 클래스에 올려 주세요.</p><div class="material-files">${files.map(f=>`<article class="material-file"><p class="material-tag">${f.tag}</p><h2>${f.label}</h2><p>${f.body}</p><a class="primary material-download" href="materials/${f.file}" download="${f.download}">${f.label} 내려받기 ↓</a></article>`).join('')}</div><p class="note material-help">내려받은 파일은 다운로드 폴더에서 찾을 수 있어요. ZIP 파일은 먼저 압축을 풀어 주세요.<br>사건파일은 학습용 카드에 섞지 않고, 학습을 마친 뒤 판별할 때 사용해요.</p><div class="actions"><button id="audio-entry" class="primary">3차시 자료실 열기 →</button><button id="back-graduate" class="secondary">내 신입연구원증 보기</button></div></section>`;
   document.querySelector('#back-graduate').onclick=()=>go('graduate-badge');
+  document.querySelector('#audio-entry').onclick=()=>go(state.audioUnlocked?'audio-materials':'audio-gate');
+}
+function audioMaterialsRoom(){
+  app.innerHTML=`<section class="materials-room audio-room enter"><p class="eyebrow">CASE FILE #2 · 3차시 자료실</p><h1 tabindex="-1">한밤의 울음소리,<br><span class="accent">정체를 찾아 주세요.</span></h1><p>울음소리 파일을 내려받고, 소리의 특징을 살펴보세요.<br>선생님의 안내에 따라 AI를 학습시키거나 판별할 때 사용해요.</p><div class="material-files audio-files">${audioFiles.map(f=>`<article class="material-file"><p class="material-tag">울음소리 · MP3</p><h2>${f.label}</h2><p>${f.label}의 울음소리 파일이에요.</p><a class="primary material-download" href="materials/${f.file}" download="${f.label}_울음소리.mp3">${f.label} 소리 내려받기 ↓</a></article>`).join('')}</div><p class="note material-help">내려받은 MP3는 다운로드 폴더에서 찾을 수 있어요. 압축을 풀지 않고 바로 사용할 수 있어요.</p><button id="back-materials" class="secondary">2차시 자료실로 돌아가기</button></section>`;
+  document.querySelector('#back-materials').onclick=()=>go('materials');
 }
 function aiLesson(){
   const p=aiPages[state.aiIndex];
@@ -121,7 +127,8 @@ function answer(index,button){
 function render(){
   if(!CourseFlow.canEnter(state,state.view)){state.view=CourseFlow.landing(state);persist();}
   document.body.classList.toggle('observing',state.view==='observation');
-  const routes={welcome:welcome,survey1:()=>survey(0),survey2:()=>survey(1),'intern-badge':()=>certificate('intern'),'graduate-badge':()=>certificate('rookie'),'intern-editor':()=>editor('intern'),'graduate-editor':()=>editor('rookie'),'lesson-gate':()=>codeGate('lesson'),'review-gate':()=>codeGate('review'),'materials-gate':()=>codeGate('materials'),materials:materialsRoom,ai:aiLesson,observation:observation,'after-observation':afterObservation,review:review};
+  document.body.classList.toggle('audio-materials',state.view==='audio-gate'||state.view==='audio-materials');
+  const routes={welcome:welcome,survey1:()=>survey(0),survey2:()=>survey(1),'intern-badge':()=>certificate('intern'),'graduate-badge':()=>certificate('rookie'),'intern-editor':()=>editor('intern'),'graduate-editor':()=>editor('rookie'),'lesson-gate':()=>codeGate('lesson'),'review-gate':()=>codeGate('review'),'materials-gate':()=>codeGate('materials'),materials:materialsRoom,'audio-gate':()=>codeGate('audio'),'audio-materials':audioMaterialsRoom,ai:aiLesson,observation:observation,'after-observation':afterObservation,review:review};
   routes[state.view]();if(state.view!=='observation'){window.scrollTo(0,0);focusTitle();}
 }
 function hashRoute(){
@@ -131,6 +138,7 @@ function hashRoute(){
   if(h==='review')view=state.reviewUnlocked?'review':'review-gate';
   if(h==='observation')view='observation';
   if(h==='materials')view=state.materialsUnlocked?'materials':'materials-gate';
+  if(h==='audio')view=state.audioUnlocked?'audio-materials':'audio-gate';
   if(view&&CourseFlow.canEnter(state,view))state.view=view;
   else if(view)state.view=CourseFlow.landing(state);
   persist();render();
