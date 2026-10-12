@@ -57,14 +57,14 @@ function survey(index){
 }
 function certificate(rank){
   const intern=rank==='intern';
-  app.innerHTML=`<section class="complete enter"><div class="success">✓ ${intern?'인턴연구원 등록 완료':'신입연구원 승급 완료'}</div><h1 tabindex="-1">${esc(state.name)} ${ranks[rank].name},<br>${intern?'연구소에 오신 것을 환영해요!':'오늘의 훈련을 잘 마쳤어요!'}</h1><p>${intern?'연구원증을 저장하고, 선생님의 안내에 따라 AI 기초훈련을 시작해요.':'수업에서 배운 내용을 확인했어요. 이제 신입연구원증을 저장해 주세요.'}</p>${badge(rank)}<div class="actions"><button id="download" class="primary">${ranks[rank].name}증 이미지 저장</button><button id="edit-badge" class="secondary">이름·캐릭터·다짐 수정</button><button id="print" class="secondary">인쇄하기</button></div><p class="print-help">저장한 이미지는 다운로드 폴더에서 찾을 수 있어요.</p><p id="save-status" class="error" role="status"></p><div class="course-next">${intern?state.rookieIssued?'<button id="graduate-copy" class="primary">신입연구원증 보기 →</button>':`<button id="lesson-entry" class="primary">${state.lessonUnlocked?'AI 기초훈련 이어 보기':'AI 기초훈련 열기'} →</button>${state.observationComplete?'<button id="review-entry" class="secondary">오늘의 복습으로 →</button>':''}`:'<button id="intern-copy" class="secondary">인턴연구원증 다시 보기</button>'}</div><button id="restart" class="text-button">다른 연구원 시작하기</button></section>`;
+  app.innerHTML=`<section class="complete enter"><div class="success">✓ ${intern?'인턴연구원 등록 완료':'신입연구원 승급 완료'}</div><h1 tabindex="-1">${esc(state.name)} ${ranks[rank].name},<br>${intern?'연구소에 오신 것을 환영해요!':'오늘의 훈련을 잘 마쳤어요!'}</h1><p>${intern?'연구원증을 저장하고, 선생님의 안내에 따라 AI 기초훈련을 시작해요.':'수업에서 배운 내용을 확인했어요. 이제 신입연구원증을 저장해 주세요.'}</p>${badge(rank)}<div class="actions"><button id="download" class="primary">${ranks[rank].name}증 이미지 저장</button><button id="edit-badge" class="secondary">이름·캐릭터·다짐 수정</button>${intern?'<button id="print" class="secondary">인쇄하기</button>':''}</div><p class="print-help">저장한 이미지는 다운로드 폴더에서 찾을 수 있어요.</p><p id="save-status" class="error" role="status"></p><div class="course-next">${intern?state.rookieIssued?'<button id="graduate-copy" class="primary">신입연구원증 보기 →</button>':`<button id="lesson-entry" class="primary">${state.lessonUnlocked?'AI 기초훈련 이어 보기':'AI 기초훈련 열기'} →</button>${state.observationComplete?'<button id="review-entry" class="secondary">오늘의 복습으로 →</button>':''}`:'<button id="materials-entry" class="primary">오늘의 자료실 열기 →</button><button id="intern-copy" class="secondary">인턴연구원증 다시 보기</button>'}</div><button id="restart" class="text-button">다른 연구원 시작하기</button></section>`;
   document.querySelector('#download').onclick=()=>download(rank);
   document.querySelector('#edit-badge').onclick=()=>go(intern?'intern-editor':'graduate-editor');
-  document.querySelector('#print').onclick=()=>window.print();
+  if(intern)document.querySelector('#print').onclick=()=>window.print();
   document.querySelector('#restart').onclick=()=>{state=CourseFlow.initial();persist();render();};
   if(intern&&state.rookieIssued)document.querySelector('#graduate-copy').onclick=()=>go('graduate-badge');
   else if(intern){document.querySelector('#lesson-entry').onclick=()=>go(state.lessonUnlocked?'ai':'lesson-gate');const review=document.querySelector('#review-entry');if(review)review.onclick=()=>go(state.reviewUnlocked?'review':'review-gate');}
-  else document.querySelector('#intern-copy').onclick=()=>go('intern-badge');
+  else{document.querySelector('#intern-copy').onclick=()=>go('intern-badge');document.querySelector('#materials-entry').onclick=()=>go(state.materialsUnlocked?'materials':'materials-gate');}
 }
 function editor(rank){
   app.innerHTML=`<section class="editor enter"><div><p class="eyebrow">${ranks[rank].name}증 꾸미기</p><h1 tabindex="-1">나의 캐릭터와<br><span class="accent">다짐을 골라 주세요.</span></h1><p>캐릭터 하나와 나의 다짐 하나를 고르면 연구원증이 완성돼요.</p><label for="edit-name">연구원 이름</label><input id="edit-name" maxlength="12" value="${esc(state.name)}" autocomplete="off"><label>나의 캐릭터 · 남학생 6종 / 여학생 6종</label><div class="avatars" role="group" aria-label="캐릭터 선택">${avatars.map(([id,name],i)=>`${i===0?'<h3 class="avatar-group">남학생 캐릭터 · 6종</h3>':i===6?'<h3 class="avatar-group">여학생 캐릭터 · 6종</h3>':''}<button class="avatar ${id===state.avatar?'selected':''}" data-avatar="${id}" aria-pressed="${id===state.avatar}"><img src="assets/${id}.png" alt="">${name}</button>`).join('')}</div><fieldset class="motto-choices"><legend>연구원증에 넣을 나의 다짐</legend>${mottos.map((lines,i)=>`<label class="motto-choice"><input type="radio" name="motto" value="${i}" ${state.motto===i?'checked':''}><span>${lines.map(esc).join('<br>')}</span></label>`).join('')}</fieldset><p id="issue-error" class="error" role="alert"></p><button id="save-badge" class="primary" ${CourseFlow.ready(state)?'':'disabled'}>이 모습으로 연구원증 만들기 →</button></div><div>${badge(rank)}<p class="sample-caption">캐릭터와 다짐을 고르면 연구원증에 바로 보여요.</p></div></section>`;
@@ -74,10 +74,21 @@ function editor(rank){
   document.querySelector('#save-badge').onclick=()=>{const name=document.querySelector('#edit-name').value.trim();if(!name){document.querySelector('#issue-error').textContent='연구원 이름을 입력해 주세요.';return;}if(!CourseFlow.ready(state))return;send({type:'edit',name},false);go(rank==='intern'?'intern-badge':'graduate-badge');};
 }
 function codeGate(stage){
-  const lesson=stage==='lesson';
-  app.innerHTML=`<section class="code-gate enter"><p class="eyebrow">${lesson?'AI 기초훈련':'오늘의 복습'}</p><h1 tabindex="-1">선생님의 안내를 듣고<br>코드를 입력해 주세요.</h1><p>${lesson?'인턴연구원 등록을 마쳤어요. 선생님이 알려 주시는 코드를 입력하면 AI 기초훈련이 열려요.':'오늘 수업을 마쳤다면 복습을 시작해요. 선생님이 알려 주시는 코드를 한 번 더 입력해 주세요.'}</p><form id="code-form"><label for="course-code">수업 코드</label><input id="course-code" autocomplete="off" placeholder="선생님이 알려 주시는 코드" required><p id="code-error" class="error" role="alert"></p><button class="primary" type="submit">${lesson?'AI 기초훈련 시작하기':'복습 시작하기'} →</button></form><button id="back-badge" class="text-button">내 인턴연구원증으로 돌아가기</button></section>`;
+  const config={lesson:{label:'AI 기초훈련',body:'인턴연구원 등록을 마쳤어요. 선생님이 알려 주시는 코드를 입력하면 AI 기초훈련이 열려요.',action:'AI 기초훈련 시작하기'},review:{label:'오늘의 복습',body:'오늘 수업을 마쳤다면 복습을 시작해요. 선생님이 알려 주시는 새로운 코드를 입력해 주세요.',action:'복습 시작하기'},materials:{label:'2차시 · 사건파일 #1',body:'신입연구원으로 첫 사건을 조사할 준비를 해요. 선생님이 알려 주시는 자료실 코드를 입력해 주세요.',action:'오늘의 자료실 열기'}}[stage];
+  const materials=stage==='materials';
+  app.innerHTML=`<section class="code-gate enter"><p class="eyebrow">${config.label}</p><h1 tabindex="-1">선생님의 안내를 듣고<br>코드를 입력해 주세요.</h1><p>${config.body}</p><form id="code-form"><label for="course-code">수업 코드</label><input id="course-code" autocomplete="off" placeholder="선생님이 알려 주시는 코드" required><p id="code-error" class="error" role="alert"></p><button class="primary" type="submit">${config.action} →</button></form><button id="back-badge" class="text-button">내 ${materials?'신입':'인턴'}연구원증으로 돌아가기</button></section>`;
   document.querySelector('#code-form').onsubmit=e=>{e.preventDefault();const opened=send({type:'unlock',stage,code:document.querySelector('#course-code').value},false);if(opened)render();else document.querySelector('#code-error').textContent='코드가 맞지 않아요. 선생님이 알려 주신 글자와 띄어쓰기를 확인해 주세요.';};
-  document.querySelector('#back-badge').onclick=()=>go('intern-badge');
+  document.querySelector('#back-badge').onclick=()=>go(materials?'graduate-badge':'intern-badge');
+}
+function materialsRoom(){
+  const files=[
+    {file:'case-file-1.png',download:'사건파일#1.png',label:'사건파일 #1',tag:'제보 사진 · PNG',body:'학습을 마친 AI에 이 사진을 넣고 정체를 추측해 보세요.'},
+    {file:'bear-cards.zip',download:'곰카드_20장.zip',label:'곰 카드',tag:'학습 자료 · 20장 · ZIP',body:'곰의 다양한 모습을 담은 카드 20장이 들어 있어요.'},
+    {file:'gorilla-cards.zip',download:'고릴라카드_20장.zip',label:'고릴라 카드',tag:'학습 자료 · 20장 · ZIP',body:'고릴라의 다양한 모습을 담은 카드 20장이 들어 있어요.'},
+    {file:'human-cards.zip',download:'사람카드_20장.zip',label:'사람 카드',tag:'학습 자료 · 20장 · ZIP',body:'사람의 다양한 모습을 담은 카드 20장이 들어 있어요.'}
+  ];
+  app.innerHTML=`<section class="materials-room enter"><p class="eyebrow">CASE FILE #1 · 2차시 자료실</p><h1 tabindex="-1">설산의 거인,<br><span class="accent">정체를 밝혀 주세요.</span></h1><p>웹캠을 사용할 수 없다면 아래 카드로 AI를 학습시켜 보세요.<br>곰·고릴라·사람 카드의 압축을 풀고, 각 종류의 사진을 알맞은 클래스에 올려 주세요.</p><div class="material-files">${files.map(f=>`<article class="material-file"><p class="material-tag">${f.tag}</p><h2>${f.label}</h2><p>${f.body}</p><a class="primary material-download" href="materials/${f.file}" download="${f.download}">${f.label} 내려받기 ↓</a></article>`).join('')}</div><p class="note material-help">내려받은 파일은 다운로드 폴더에서 찾을 수 있어요. ZIP 파일은 먼저 압축을 풀어 주세요.<br>사건파일은 학습용 카드에 섞지 않고, 학습을 마친 뒤 판별할 때 사용해요.</p><button id="back-graduate" class="secondary">내 신입연구원증 보기</button></section>`;
+  document.querySelector('#back-graduate').onclick=()=>go('graduate-badge');
 }
 function aiLesson(){
   const p=aiPages[state.aiIndex];
@@ -110,7 +121,7 @@ function answer(index,button){
 function render(){
   if(!CourseFlow.canEnter(state,state.view)){state.view=CourseFlow.landing(state);persist();}
   document.body.classList.toggle('observing',state.view==='observation');
-  const routes={welcome:welcome,survey1:()=>survey(0),survey2:()=>survey(1),'intern-badge':()=>certificate('intern'),'graduate-badge':()=>certificate('rookie'),'intern-editor':()=>editor('intern'),'graduate-editor':()=>editor('rookie'),'lesson-gate':()=>codeGate('lesson'),'review-gate':()=>codeGate('review'),ai:aiLesson,observation:observation,'after-observation':afterObservation,review:review};
+  const routes={welcome:welcome,survey1:()=>survey(0),survey2:()=>survey(1),'intern-badge':()=>certificate('intern'),'graduate-badge':()=>certificate('rookie'),'intern-editor':()=>editor('intern'),'graduate-editor':()=>editor('rookie'),'lesson-gate':()=>codeGate('lesson'),'review-gate':()=>codeGate('review'),'materials-gate':()=>codeGate('materials'),materials:materialsRoom,ai:aiLesson,observation:observation,'after-observation':afterObservation,review:review};
   routes[state.view]();if(state.view!=='observation'){window.scrollTo(0,0);focusTitle();}
 }
 function hashRoute(){
@@ -119,6 +130,7 @@ function hashRoute(){
   if(h==='ai')view=state.lessonUnlocked?'ai':'lesson-gate';
   if(h==='review')view=state.reviewUnlocked?'review':'review-gate';
   if(h==='observation')view='observation';
+  if(h==='materials')view=state.materialsUnlocked?'materials':'materials-gate';
   if(view&&CourseFlow.canEnter(state,view))state.view=view;
   else if(view)state.view=CourseFlow.landing(state);
   persist();render();
@@ -136,7 +148,7 @@ async function download(rank){
     c.fillStyle='#eaf0dc';c.fillRect(65,815,770,145);c.fillStyle='#214f40';c.font='bold 28px LaundryGothic, sans-serif';c.fillText(mottos[state.motto][0],450,871);c.fillText(mottos[state.motto][1],450,917);c.font='23px LaundryGothic, sans-serif';c.fillStyle='#607269';c.fillText(state[r.date],450,1060);c.font='15px LaundryGothic, sans-serif';c.fillText('캐릭터: Kitsuge Apps + 신규 제작',450,1160);
     const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('이미지 변환 실패')),'image/png'));
     const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`미확인생물연구소_${r.name}증_${state.name.replace(/[\\/:*?"<>|]/g,'_')}.png`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);document.querySelector('#save-status').textContent=r.name+'증 이미지를 저장했어요. 다운로드 폴더를 확인해 주세요.';
-  }catch{document.querySelector('#save-status').textContent='이미지 저장이 어려워요. 다시 시도하거나 인쇄하기를 이용해 주세요.';}
+  }catch{document.querySelector('#save-status').textContent='이미지 저장이 어려워요. 잠시 뒤 다시 시도해 주세요.';}
   finally{button.disabled=false;button.textContent=r.name+'증 이미지 저장';}
 }
 hashRoute();
