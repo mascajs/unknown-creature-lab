@@ -1,0 +1,149 @@
+[
+  {
+    "name": "bear-clear.jpg",
+    "url": "보조자료/이미지/곰카드 (20).png",
+    "credit": "제공받은 곰 카드에서 사진 부분만 자른 파일 / 검증실의 또렷한 곰 사진",
+    "bytes": 335802,
+    "sha256": "28bbefbe619a61cb6764bee80eaa1bd0472d69ddeecb37a480c4e64dc894f0fd"
+  },
+  {
+    "name": "camera-bear.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Carnivore_camera-_Wildlife_photos_from_the_Wild_Rogue_Wilderness_(19729825291).jpg",
+    "credit": "위키미디어 공용 / 미국 국유지 관리국(BLM) Oregon·Washington / 퍼블릭 도메인 / Wild Rogue Wilderness 무인 카메라 / 6차시 증거",
+    "bytes": 392032,
+    "sha256": "71b87eda0e09d4b2b9b64c3dc4cefda2d9374992a117d29bb7e658d52e051c77"
+  },
+  {
+    "name": "camera-small.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Carnivore_camera_Wildlife_photos_from_the_Wild_Rogue_Wilderness_(19537169468).jpg",
+    "credit": "위키미디어 공용 / 미국 국유지 관리국(BLM) Oregon·Washington / 퍼블릭 도메인 / Wild Rogue Wilderness 무인 카메라 / 6차시 증거",
+    "bytes": 250456,
+    "sha256": "f88b3b1cf7a901ed46d18ba0c03d2e4c9a07cbfcc13ec81f76a41e99008ba265"
+  },
+  {
+    "name": "creature-edit.png",
+    "url": "수업자료/5차시_가짜제보_이미지_코덱스요청.md",
+    "credit": "AI 편집 이미지 / report-dark.jpg의 동물 머리에 눈빛 네 개와 등 돌기를 더함, Codex 내장 이미지 편집 도구로 2026-10-14 제작 / 제보 ⑤",
+    "bytes": 1238681,
+    "sha256": "8a97560664f8530ee1373f70b2eb89adf5bf166f25667c62b8855566dc5ad6a6"
+  },
+  {
+    "name": "event-ad.jpg",
+    "url": "https://static.time.com/v3/assets/bltea6093859af6183b/blta46944a974a87954/698a48ed0116820d30984573/willy-wonka-experience-scam-02.jpg?auto=webp&branch=production&quality=75&width=1200",
+    "credit": "TIME / 원 행사 홍보 화면",
+    "bytes": 86930,
+    "sha256": "87d4cd47bced02c2b47c1958c71525f0390d0b97f48a0643cea2429fd3be31c1"
+  },
+  {
+    "name": "event-real.jpg",
+    "url": "https://static.time.com/v3/assets/bltea6093859af6183b/blt2decbb6cf9d92e7f/698a48f0db298730f026a417/willy-wonka-experience-scam.jpg?auto=webp&branch=production&crop=3%3A2&quality=75&width=1200",
+    "credit": "TIME / SWNS Video·Reuters 현장 화면",
+    "bytes": 40874,
+    "sha256": "b6ae0a2d59fbc1412a4dc80e390366a43f9545d6f94acee06526963cafd9e2c1"
+  },
+  {
+    "name": "movie-poster.webp",
+    "url": "https://images.ctfassets.net/kftzwdyauwt9/3clHZx77q5d4oU2yP93p9Z/4fc98e68d06ab23af6d4407172d8380e/codex-redux.png?fm=webp&q=90&w=1080",
+    "credit": "OpenAI 공식 가상 영화 포스터 시연",
+    "bytes": 240746,
+    "sha256": "5156ad467a54a66ad0999301fd3e0ac96d48acbe740ddc674ce213145434245f"
+  },
+  {
+    "name": "portrait-compare.png",
+    "url": "https://r1.gostudio.ai/ai-tools/face-to-full-portriat/facetf-before-after.png?height=870&width=1160",
+    "credit": "GoStudio 공개 변환 시연",
+    "bytes": 893682,
+    "sha256": "be54a7ac982ad3f88a081bbae09ab0c1b2a3ae22d13af1911c5e9679e910d9f2"
+  },
+  {
+    "name": "report-dark.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Carnivore_camera-_Wildlife_photos_from_the_Wild_Rogue_Wilderness_(19729837281).jpg",
+    "credit": "위키미디어 공용 / 미국 국유지 관리국(BLM) Oregon·Washington / 퍼블릭 도메인 / Wild Rogue Wilderness 무인 카메라 / 제보 ②",
+    "bytes": 258979,
+    "sha256": "e433354c8bc733f7d24cc8c45cb985e62d1756edb951c7256ec06a6355f138ba"
+  },
+  {
+    "name": "report-far-zoom.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Carnivore_camera-_Wildlife_photos_from_the_Wild_Rogue_Wilderness_(19725217075).jpg",
+    "credit": "위키미디어 공용 / 미국 국유지 관리국(BLM) Oregon·Washington / 퍼블릭 도메인 / Wild Rogue Wilderness 무인 카메라 / report-far.jpg의 왼쪽 위를 잘라 키운 파일",
+    "bytes": 125761,
+    "sha256": "34497006581b26fdfc5ab6cb5578a70fe3fe4e9469b70aeb1adeae97281f5720"
+  },
+  {
+    "name": "report-far.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Carnivore_camera-_Wildlife_photos_from_the_Wild_Rogue_Wilderness_(19725217075).jpg",
+    "credit": "위키미디어 공용 / 미국 국유지 관리국(BLM) Oregon·Washington / 퍼블릭 도메인 / Wild Rogue Wilderness 무인 카메라 / 제보 ①",
+    "bytes": 249847,
+    "sha256": "58704ce74c37ac19d0a5f1756f2e389fd9d123ca41672a24df6f336e9e28b733"
+  },
+  {
+    "name": "sound-low.mp3",
+    "url": "https://commons.wikimedia.org/wiki/File:Yellowstone_sound_library_-_Grizzly_Bear_vocalizations_-_001.mp3",
+    "credit": "위키미디어 공용 / NPS·MSU Acoustic Atlas / 퍼블릭 도메인 / 17~24.5초 구간을 잘라 음량을 맞춘 파일",
+    "bytes": 125538,
+    "sha256": "2f9f3cafe7e7ab26c1e389fb67452aa3bcbe89a1838ba5651f29482c0433a327"
+  },
+  {
+    "name": "sound-night.mp3",
+    "url": "https://commons.wikimedia.org/wiki/File:Yellowstone_sound_library_-_Grizzly_Bear_vocalizations_-_001.mp3",
+    "credit": "수업용으로 섞은 소리 / 3차시 부엉이 음원 + NPS 곰 소리(sound-low.mp3) / 제보 ③",
+    "bytes": 232846,
+    "sha256": "70950df08eb5ff40d45404340be5817b30b913368885789014dc74ab0c832a1f"
+  },
+  {
+    "name": "sound-owl.mp3",
+    "url": "보조자료/음원/B.부엉이.mp3",
+    "credit": "교사가 제공한 3차시 부엉이 음원",
+    "bytes": 120525,
+    "sha256": "e15b9639d0e2a13daefb9f314e5d3b5332429d0e19b1d01eefc60c8d18b3fc0c"
+  },
+  {
+    "name": "tent-claw.png",
+    "url": "수업자료/5차시_가짜제보_이미지_코덱스요청.md",
+    "credit": "AI 생성 이미지 / Codex 내장 이미지 생성 도구로 2026-10-14 제작, 프롬프트는 요청 문서의 제작 기록 / 제보 ④",
+    "bytes": 2863051,
+    "sha256": "b4d6614ac3b93541b5dfcea146d13d6ebae7a72d6a2fb24e82d5b1491ff541ad"
+  },
+  {
+    "name": "toy-plane.png",
+    "url": "https://developers.openai.com/cookbook/assets/images/christmas_collectible_toy_airplane.png",
+    "credit": "OpenAI 공식 이미지 생성 가이드 6.3 / AI 생성 시안",
+    "bytes": 518720,
+    "sha256": "5c9b959be72b0be68bbb18fa9a4a5ccfd66dddc1221415a0d33e175999606d94"
+  },
+  {
+    "name": "trace-bin.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Grizzly_paw_prints_on_bear_resistant_dumpster_(54521816610).jpg",
+    "credit": "위키미디어 공용 / YellowstoneNPS / 퍼블릭 도메인 / 쓰레기통에 남은 곰 발자국",
+    "bytes": 374867,
+    "sha256": "22a2949c9c47b4af14c0e1a0bada49e328fbae32a36e2bfe6dcbc59c5139dfd1"
+  },
+  {
+    "name": "track-bear.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:A_fresh_black_bear_track_in_the_mud_leaves_an_impression._(6803486491).jpg",
+    "credit": "위키미디어 공용 / U.S. Fish and Wildlife Service / 퍼블릭 도메인 / 곰 발자국",
+    "bytes": 972048,
+    "sha256": "5c48cb09517429649669be2823f429f094a1670b23bdc9b6a95b2463ddf9842b"
+  },
+  {
+    "name": "track-dog-many.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Dog_paw_prints_in_the_sand_-_Lagos_-_The_Algarve%2C_Portugal_(1470423402).jpg",
+    "credit": "위키미디어 공용 / Glen Bowman / CC BY 2.0 / 모래 위의 개 발자국",
+    "bytes": 499924,
+    "sha256": "1a042b3973f4d6d0ec7f184ab4436d2db4e04a51d1feccf9ec19cb07c9796c31"
+  },
+  {
+    "name": "track-dog.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:Impronta_di_cane.JPG",
+    "credit": "위키미디어 공용 / Stefano59Rivara / CC BY-SA 3.0 / 개 발자국",
+    "bytes": 572111,
+    "sha256": "971f525073d6ef9a45b89e8322af624d5326f9076e700eac61577502e582805a"
+  },
+  {
+    "name": "zebra-traffic.jpg",
+    "url": "https://img.khan.co.kr/news/2023/03/27/news-p.v1.20230323.3aa2b9f8b1494cafb96fd60450304a61_P1.jpg",
+    "credit": "경향신문 보도 사진 / 트위터 갈무리 / 2023년 3월 23일 차들 사이 도로의 얼룩말 세로",
+    "bytes": 226733,
+    "sha256": "63c3f6374fe32c95b0b8e2aec1fc4a72fa017c6aa9e75b3894e3a6ebb9cd408f"
+  }
+]
